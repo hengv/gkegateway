@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: store-v1
+  annotations:
+    cloud.google.com/backend-config: '{"default": "store-backendconfig"}'
+spec:
+  selector:
+    app: store
+    version: v1
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: store-backendconfig
+spec:
+  healthCheck:
+    checkIntervalSec: 15
+    port: 15020
+    type: HTTPS
+    requestPath: /healthz
+  connectionDraining:
+    drainingTimeoutSec: 60

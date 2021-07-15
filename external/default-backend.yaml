@@ -1,0 +1,11 @@
+kind: HTTPRoute
+apiVersion: networking.x-k8s.io/v1alpha1
+metadata:
+  name: custom-default-backend
+  labels:
+    gateway: my-gateway
+spec:
+  rules:
+  - forwardTo:
+    - serviceName: my-custom-default-backend-service
+      port: 8080
